@@ -1,6 +1,7 @@
 var regexMM = new RegExp("[\u1000-\u109f\uaa60-\uaa7f]+");
-var regexUni = new RegExp("[ဃငဆဇဈဉညဋဌဍဎဏဒဓနဘရဝဟဠအ]်|ျ[က-အ]ါ|ျ[ါ-း]|\u103e|\u103f|\u1031[^\u1000-\u1021\u103b\u1040\u106a\u106b\u107e-\u1084\u108f\u1090]|\u1031$|\u1031[က-အ]\u1032|\u1025\u102f|\u103c\u103d[\u1000-\u1001]|ည်း|ျင်း|င်|န်း|ျာ|င့်");
-var regexZG = new RegExp("\s\u1031| ေ[က-အ]်|[က-အ]း");
+var regexUni = new RegExp("[ဃငဆဇဈဉညဋဌဍဎဏဒဓနဘရဝဟဠအ]\u103a|\u103b[က-အ]\u102b|\u103b[ါ-း]|\u103e|\u103f|\u1031$|\u1031[က-အ]\u1032|\u1025\u102f|\u103c\u103d[\u1000-\u1001]|ည်း|ျင်း|င်|န်း|ျာ|င့်");
+var regexZG = new RegExp("\s\u1031| ေ[က-အ]ွ|[က-အ]း|\u107e[က-အ]|\u1039[^က-အ]|\u1039$|\u1039\s|^\u1031|\u103a[\u102a-\u1039]|\u107f[က-အ]|\u102d\u1033|\s\u103b|^\u103b|\u200b\u103b|\u200b\u1031");
+
 var timerID = undefined;
 var mmFonts = new RegExp("Zawgyi-One|Masterpiece Uni Sans|Myanmar3|Yunghkio|Parabaik|WinUni Innwa|Win Uni Innwa|Padauk|MyMyanmar|Panglong|TharLon");
 var unicodeFonts = new RegExp("MON3 Anonta 1 | Masterpiece Uni Sans|Myanmar3|Yunghkio|Parabaik|WinUni Innwa|Win Uni Innwa|Padauk|MyMyanmar|Panglong|TharLon|Myanmar Sangam");
@@ -247,7 +248,7 @@ function tagPage()
             if (regexUni.test(text) && !regexZG.test(text)) {
                 
 
-            } else {
+            } if (!regexUni.test(text) && regexZG.test(text)){
 
 		//text=zg2uni(text);
 		thisNode.innerHTML=Z1_Uni(thisNode.innerHTML);
@@ -297,7 +298,7 @@ function tagPage()
 
 				prNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont; //if unicode
 
-                        } else {
+                        } if (!regexUni.test(text) && regexZG.test(text)) {
 				prNode.innerHTML=Z1_Uni(prNode.innerHTML);
 				//text=zg2uni(text);
 				//prNode.textContent=text;
