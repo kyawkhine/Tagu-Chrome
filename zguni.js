@@ -3,24 +3,25 @@ var regexUni = new RegExp("[ဃငဆဇဈဉညဋဌဍဎဏဒဓနဘရ�
 var regexZG = new RegExp("\s\u1031| ေ[က-အ]ှ|[က-အ]း|\u107e[က-အ]|\u1039[^က-အ]|\u1039$|\u1039\s|^\u1031|\u103a[\u102a-\u1039]|\u107f[က-အ]|\u102d\u1033|\s\u103b|^\u103b|\u0020\u103b|\u0020\u1031|[၀-၉]\u1031|[\u102b-\u1039]\u1031|\u1064[\u102b\u102c]|\u1073[\u102d\u102e\u103a-\u103e]|ြွ|[\u102b-\u1032]\u103b|\u1080[က-အ]|\u102f[\u102d]|\u1039[\u102b-\u103f]");
 
 var timerID = undefined;
-var mmFonts = new RegExp("Zawgyi-One|Masterpiece Uni Sans|Myanmar3|Yunghkio|Parabaik|WinUni Innwa|Win Uni Innwa|Padauk|MyMyanmar|Panglong|TharLon");
-var unicodeFonts = new RegExp("MON3 Anonta 1 | Masterpiece Uni Sans|Myanmar3|Yunghkio|Parabaik|WinUni Innwa|Win Uni Innwa|Padauk|MyMyanmar|Panglong|TharLon|Myanmar Sangam");
-var useUnicodeFont = "'MON3 Anonta 1',TharLon,'Masterpiece Uni Sans','Myanmar Sangam MN',Myanmar3,Yunghkio,Parabaik,'WinUni Innwa','Win Uni Innwa',Padauk,Panglong,'MyMyanmar Unicode','Myanmar MN'";
+//var mmFonts = new RegExp("Zawgyi-One|Masterpiece Uni Sans|Myanmar3|Yunghkio|Parabaik|WinUni Innwa|Win Uni Innwa|Padauk|MyMyanmar|Panglong|TharLon");
+//var unicodeFonts = new RegExp("MON3 Anonta 1 | Masterpiece Uni Sans|Myanmar3|Yunghkio|Parabaik|WinUni Innwa|Win Uni Innwa|Padauk|MyMyanmar|Panglong|TharLon|Myanmar Sangam");
+//var useUnicodeFont = "'MON3 Anonta 1',TharLon,'Masterpiece Uni Sans','Myanmar Sangam MN',Myanmar3,Yunghkio,Parabaik,'WinUni Innwa','Win Uni Innwa',Padauk,Panglong,'MyMyanmar Unicode','Myanmar MN'";
 
 var facebook_wordbreaking_classes = ['messageBody', 'commentBody', 'uiAttachmentTitle', 'uiAttachmentDesc', 'ministoryInlineMessage', 'msg'];
-
+/*
 var dummySpanEl = document.createElement('span');
 dummySpanEl.style.fontFamily = useUnicodeFont;
 useUnicodeFont = dummySpanEl.style.fontFamily;
-
+*/
 //create font face CSS Unicode
-var styleNode           = document.createElement ("style");
+/*var styleNode           = document.createElement ("style");
 styleNode.type          = "text/css";
 styleNode.textContent   = "@font-face { font-family: 'MON3 Anonta 1'; src: local('MON3 Anonta 1'),url('"
                         + chrome.extension.getURL ("fonts/mon3.ttf")
                         + "'); }"
                         ;
 document.head.appendChild (styleNode);
+*/
 
 
 // JavaScript Document
@@ -234,25 +235,27 @@ function tagPage()
                 continue;
             }
         
-            var computedStyles = document.defaultView.getComputedStyle(thisNode, null);
+//            var computedStyles = document.defaultView.getComputedStyle(thisNode, null);
         
-            if (computedStyles.fontFamily.indexOf(useUnicodeFont) == -1 && unicodeFonts.test(computedStyles.fontFamily)) {
+/*            if (computedStyles.fontFamily.indexOf(useUnicodeFont) == -1 && unicodeFonts.test(computedStyles.fontFamily)) {
                 thisNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont;
                 continue;
             }
-        
-            if (mmFonts.test(computedStyles.fontFamily)) {
+*/        
+/*           if (mmFonts.test(computedStyles.fontFamily)) {
                 continue;
             }
-        
-            if (regexUni.test(text) && !regexZG.test(text)) {
+*/        
+/*            if (regexUni.test(text) && !regexZG.test(text)) {
                 
 
-            } if (!regexUni.test(text) && regexZG.test(text)){
+            } 
+*/
+	    if (!regexUni.test(text) && regexZG.test(text)){
 
 		//text=zg2uni(text);
 		thisNode.innerHTML=Z1_Uni(thisNode.innerHTML);
-		thisNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont;
+//		thisNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont;
             }
         }
     }
@@ -273,18 +276,18 @@ function tagPage()
 
                  }
 
-                 var computedStyles = document.defaultView.getComputedStyle(prNode, null);//check for font declaration
-                 if (computedStyles.fontFamily.indexOf(useUnicodeFont) == -1 && unicodeFonts.test(computedStyles.fontFamily)){ 
+//                 var computedStyles = document.defaultView.getComputedStyle(prNode, null);//check for font declaration
+/*                 if (computedStyles.fontFamily.indexOf(useUnicodeFont) == -1 && unicodeFonts.test(computedStyles.fontFamily)){ 
 
                      prNode.style.fontFamily = useUnicodeFont; //check for unicode declaration
 
                      continue;
                  }
-                 
-                 if (mmFonts.test(computedStyles.fontFamily)) {                //check for zawgyi declaration             
+*/                 
+/*                 if (mmFonts.test(computedStyles.fontFamily)) {                //check for zawgyi declaration             
                      continue;
                  }
- 		// nofontfamily so unicode or zawgyi check mal
+*/ 		// nofontfamily so unicode or zawgyi check mal
 
                  var nextNode = thisNode;
 
@@ -294,15 +297,11 @@ function tagPage()
                     }
                      
                     if (text) {
-                        if (regexUni.test(text) && !regexZG.test(text)) { //check whether unicode or zawgyi without font declaration
-
-				prNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont; //if unicode
-
-                        } if (!regexUni.test(text) && regexZG.test(text)) {
+			 if (!regexUni.test(text) && regexZG.test(text)) {
 				prNode.innerHTML=Z1_Uni(prNode.innerHTML);
 				//text=zg2uni(text);
 				//prNode.textContent=text;
-				prNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont;
+//				prNode.style.fontFamily = computedStyles.fontFamily + "," + useUnicodeFont;
 
                         }
                     }
